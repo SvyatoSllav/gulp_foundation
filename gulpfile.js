@@ -39,7 +39,9 @@ function styles() {
 
 function scripts() {
   return gulp.src(paths.scripts.src)
-    .pipe(babel())
+    .pipe(babel({
+      presets: ['@babel/env']
+    }))
     .pipe(uglify())
     .pipe(concat('main.min.js'))
     .pipe(gulp.dest(paths.scripts.dest))

@@ -10,6 +10,7 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
     "del": "^6.1.1",
     "graceful-fs": "^4.2.10",
     "gulp": "^4.0.2",
