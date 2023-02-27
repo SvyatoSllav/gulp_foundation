@@ -1,6 +1,3 @@
-const realFs = require('fs')
-const gracefulFs = require('graceful-fs')
-gracefulFs.gracefulify(realFs)
 const gulp = require('gulp');
 const less = require('gulp-less');
 const rename = require('gulp-rename');
@@ -9,6 +6,7 @@ const babel = require('gulp-babel');
 const uglify = require('gulp-uglify');
 const concat = require('gulp-concat');
 const del = require('del');
+const sourcemaps = require('gulp-sourcemaps');
 
 
 const paths = {
@@ -28,12 +26,14 @@ function clean() {
 
 function styles() {
   return gulp.src(paths.styles.src)
+    .pipe(sourcemaps.init())
     .pipe(less())
     .pipe(cleanCSS())
     .pipe(rename({
       basename: 'main',
       suffix: '.min'
     }))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest(paths.styles.dest))
 }
 
