@@ -7,6 +7,7 @@ const uglify = require('gulp-uglify');
 const concat = require('gulp-concat');
 const del = require('del');
 const sourcemaps = require('gulp-sourcemaps');
+const imagemin = require('gulp-imagemin');
 
 
 const paths = {
@@ -17,6 +18,10 @@ const paths = {
   scripts: {
     src: "src/scripts/**/*.js",
     dest: "dist/js/"
+  },
+  images: {
+    src: "src/images/*",
+    dest: "dist/images/"
   }
 }
 
@@ -47,16 +52,25 @@ function scripts() {
     .pipe(gulp.dest(paths.scripts.dest))
 }
 
+function img() {
+  return gulp.src(paths.images.src)
+    .pipe(imagemin({
+      progressive: true,
+    }))
+    .pipe(gulp.dest(paths.images.dest))
+}
+
 function watch() {
   gulp.watch(paths.styles.src, styles);
   gulp.watch(paths.scripts.src, scripts);
 }
 
-const build = gulp.series(clean, gulp.parallel(styles, scripts), watch);
+const build = gulp.series(clean, gulp.parallel(styles, scripts, img), watch);
 
 exports.clean = clean;
 exports.styles = styles;
 exports.scripts = scripts;
+exports.img = img;
 exports.watch = watch;
 exports.build = build;
 exports.default = build;
